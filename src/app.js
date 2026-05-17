@@ -1,6 +1,7 @@
 // ============================================
-// APLICACIÓN DE SALUDO - v1.0
+// APLICACIÓN DE SALUDO - v1.0.1 (HOTFIX)
 // Funcionalidad básica: Saludo simple
+// HOTFIX: Validar que el nombre no esté vacío
 // ============================================
 
 const fs = require('fs');
@@ -21,32 +22,42 @@ function registrarLog(mensaje) {
   fs.appendFileSync(archivoLog, linea);
 }
 
-// Función principal para v1.0
+// Función principal para v1.0.1
 async function iniciarAplicacion() {
   console.log('═══════════════════════════════════════');
-  console.log('   APLICACIÓN DE SALUDO - v1.0');
+  console.log('   APLICACIÓN DE SALUDO - v1.0.1');
   console.log('═══════════════════════════════════════');
   console.log('');
   console.log('¡Bienvenido a la aplicación de saludo!');
   console.log('');
 
-  registrarLog('Aplicación iniciada - v1.0');
+  registrarLog('Aplicación iniciada - v1.0.1 (hotfix)');
 
-  // Crear interfaz de entrada
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
   });
 
-  // Solicitar nombre
   rl.question('¿Cuál es tu nombre? ', (nombre) => {
-    const saludo = `¡Hola, ${nombre}!`;
+    // HOTFIX: Validar que el nombre no esté vacío
+    const nombreLimpio = (nombre || '').trim();
+
+    if (!nombreLimpio) {
+      console.log('');
+      console.log('⚠️  Error: Debes ingresar un nombre válido.');
+      console.log('');
+      registrarLog('ERROR: Usuario no ingresó un nombre válido');
+      rl.close();
+      process.exit(1);
+    }
+
+    const saludo = `¡Hola, ${nombreLimpio}!`;
     console.log('');
     console.log(saludo);
     console.log('');
 
-    registrarLog(`Usuario saludado: ${nombre}`);
-    registrarLog('Aplicación finalizada - v1.0');
+    registrarLog(`Usuario saludado: ${nombreLimpio}`);
+    registrarLog('Aplicación finalizada - v1.0.1');
 
     console.log('Gracias por usar la aplicación.');
     rl.close();
@@ -54,5 +65,4 @@ async function iniciarAplicacion() {
   });
 }
 
-// Ejecutar aplicación
 iniciarAplicacion();
