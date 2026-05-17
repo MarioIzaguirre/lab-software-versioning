@@ -1,0 +1,12 @@
+{
+  "name": "saludo-app",
+  "version": "1.0.0",
+  "description": "Aplicación de saludo con gestión de versiones",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "keywords": ["saludo", "versioning"],
+  "author": "Tu Nombre",
+  "license": "MIT"
+}
